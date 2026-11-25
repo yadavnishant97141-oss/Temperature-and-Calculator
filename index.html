@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Temperature Converter Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow glow-purple"></div>
+  <div class="glow glow-orange"></div>
+
+  <main class="app">
+    <header class="top">
+      <h1>Temperature Converter</h1>
+      <p>Live thermal monitoring dashboard. Type a value and watch every reading update.</p>
+    </header>
+
+    <section class="layout">
+      <!-- Controls -->
+      <div class="card controls">
+        <h2>Input</h2>
+
+        <label for="tempInput">Temperature</label>
+        <div class="field">
+          <input id="tempInput" type="text" inputmode="decimal" value="25" autocomplete="off" aria-describedby="errorMsg">
+          <span id="unitSuffix" class="suffix">°C</span>
+        </div>
+
+        <label for="convType">Conversion</label>
+        <select id="convType">
+          <option value="c2f">Celsius to Fahrenheit</option>
+          <option value="f2c">Fahrenheit to Celsius</option>
+          <option value="c2k">Celsius to Kelvin</option>
+          <option value="k2c">Kelvin to Celsius</option>
+        </select>
+
+        <p id="errorMsg" class="error" role="alert"></p>
+
+        <div class="buttons">
+          <button id="convertBtn" class="btn primary" type="button">Convert</button>
+          <button id="resetBtn" class="btn ghost" type="button">Reset</button>
+        </div>
+
+        <div id="resultCard" class="result">
+          <span class="small">Selected conversion</span>
+          <strong id="resultValue">--</strong>
+          <span id="resultNote" class="small">Enter a temperature to begin</span>
+        </div>
+      </div>
+
+      <!-- Circular gauge -->
+      <div class="card gauge-card">
+        <h2>Temperature gauge</h2>
+        <svg class="gauge" viewBox="0 0 300 300" role="img" aria-label="Circular temperature gauge from -50 to 150 degrees Celsius">
+          <defs>
+            <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="5" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <path class="arc-track" pathLength="100" d="M 72.22 227.78 A 110 110 0 1 1 227.78 227.78"/>
+          <path id="gaugeArc" class="arc-fill" pathLength="100" filter="url(#softGlow)" d="M 72.22 227.78 A 110 110 0 1 1 227.78 227.78"/>
+
+          <g class="tick-labels">
+            <text x="56.7" y="248">-50</text>
+            <text x="26" y="102">0</text>
+            <text x="150" y="20">50</text>
+            <text x="274" y="102">100</text>
+            <text x="243.3" y="248">150</text>
+          </g>
+
+          <line id="needle" class="needle" x1="150" y1="150" x2="150" y2="62" filter="url(#softGlow)"/>
+          <circle class="hub" cx="150" cy="150" r="11"/>
+          <circle class="hub-core" cx="150" cy="150" r="4"/>
+
+          <text id="gaugeValue" class="g-value" x="150" y="208">--</text>
+          <text id="gaugeStatus" class="g-status" x="150" y="230">Waiting for input</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Horizontal meter -->
+    <section class="card bar-card">
+      <div class="bar-head">
+        <h2>Temperature meter</h2>
+        <span id="statusBadge" class="badge">Waiting for input</span>
+      </div>
+      <div class="bar-track" role="progressbar" aria-valuemin="-50" aria-valuemax="150" aria-valuenow="-50" id="barTrack">
+        <div id="barFill" class="bar-fill"></div>
+      </div>
+      <div class="bar-scale"><span>-50°C</span><span>0°C</span><span>50°C</span><span>100°C</span><span>150°C</span></div>
+      <div class="bar-foot">
+        <span>Meter fill: <b id="barPercent">0%</b></span>
+        <span id="rangeNote" class="range-note"></span>
+      </div>
+    </section>
+
+    <!-- Readings -->
+    <section class="readings">
+      <div class="card read"><span class="small">Celsius</span><strong id="cardC">--</strong></div>
+      <div class="card read"><span class="small">Fahrenheit</span><strong id="cardF">--</strong></div>
+      <div class="card read"><span class="small">Kelvin</span><strong id="cardK">--</strong></div>
+    </section>
+
+    <footer>Temperature Converter Microproject
+      Developed By Nishant Yadav
+      
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
